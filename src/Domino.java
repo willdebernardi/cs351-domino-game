@@ -1,11 +1,6 @@
 public class Domino {
     private int sideOne, sideTwo;
 
-    public Domino() {
-        sideOne = 0;
-        sideTwo = 0;
-    }
-
     public Domino(int sideOne, int sideTwo) {
         this.sideOne = sideOne;
         this.sideTwo = sideTwo;
@@ -20,5 +15,13 @@ public class Domino {
     public String toString() {
         String output = "[" + sideOne + " | " + sideTwo + "]";
         return output;
+    }
+
+    public int getSideOne() {
+        return sideOne;
+    }
+
+    public int getSideTwo() {
+        return sideTwo;
     }
 }

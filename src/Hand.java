@@ -5,9 +5,9 @@ public class Hand {
 
     public void populateHand(Boneyard boneyard) {
         for(int i = 0; i<=6; i++) {
-            hand.add(boneyard.getDominos().get(i));
+            hand.add(boneyard.getBoneyard().get(i));
         }
-        boneyard.getDominos().removeAll(hand);
+        boneyard.getBoneyard().removeAll(hand);
     }
     
     public ArrayList<Domino> getHand() {

@@ -1,19 +1,19 @@
 import java.util.*;
 
 public class Boneyard {
-    private static LinkedList<Domino> dominos = new LinkedList<>();
+    private static LinkedList<Domino> boneyard = new LinkedList<>();
 
     public void populateBoneyard() {
         for(int i = 0; i<=6; i++) {
             for(int j=i; j<=6; j++) {
                 Domino dom = new Domino(i,j);
-                dominos.add(dom);
+                boneyard.add(dom);
             }
         }
-        Collections.shuffle(dominos);
+        Collections.shuffle(boneyard);
     }
 
-    public LinkedList<Domino> getDominos() {
-        return dominos;
+    public LinkedList<Domino> getBoneyard() {
+        return boneyard;
     }
 }
