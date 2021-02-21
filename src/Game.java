@@ -11,6 +11,8 @@ public class Game {
         Computer computer = new Computer(boneyard);
         boolean madeMove = false;
         boolean shouldBreak = false;
+        boolean placedLeft = false;
+        String offset = "    ";
         System.out.println("Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
         ArrayList<String> rowOne = new ArrayList<>();
         ArrayList<String> rowTwo = new ArrayList<>();
@@ -32,6 +34,9 @@ public class Game {
                         int dominoIndex = sc.nextInt();
                         System.out.println("Left or right? (l/r)");
                         String sideChoice = sc.next();
+                        if(sideChoice.equals("l")) {
+                            placedLeft = true;
+                        }
                         System.out.println("Flip domino? (y/n)");
                         String flipChoice = sc.next();
                         player.placeDomino(board, dominoIndex, flipChoice, sideChoice);
@@ -54,15 +59,30 @@ public class Game {
 
             while(madeMove) {
                 madeMove = false;
-//                Domino lastPlaced = board.getRow().get(board.getRow().size() - 1);
-//                rowOne.add(lastPlaced.toString());
+                Domino lastPlaced = board.getRow().get(board.getRow().size() - 1);
+                // Checks if domino was placed to the left, and if so,
+                // the last placed domino is changed to the furthest left
+                // and then is added to the first row
+                if(placedLeft) {
+                    lastPlaced = board.getRow().get(0);
+                    rowOne.add(0, lastPlaced.toString());
+                    // Adds spaces to the offset if domino is placed to the left
+                    // in order to preserve the formatting
+                    offset += "         ";
+                } else {
+                    rowOne.add(lastPlaced.toString());
+                }
+
                 System.out.println("Computer turn");
                 computer.placeDomino(board);
-//                System.out.println("Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
-//                lastPlaced = board.getRow().get(board.getRow().size() - 1);
-//                rowTwo.add(lastPlaced.toString());
-//                System.out.println(rowOne.toString());
-//                System.out.println("    " + rowTwo.toString());
+
+                System.out.println("Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
+                lastPlaced = board.getRow().get(board.getRow().size() - 1);
+                rowTwo.add(lastPlaced.toString());
+
+                System.out.println(rowOne.toString());
+                System.out.println(offset + rowTwo.toString());
+
                 System.out.println("Row: " + board.getRow().toString());
             }
             if (boneyard.getBoneyard().isEmpty()) {
