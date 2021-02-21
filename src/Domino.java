@@ -1,9 +1,11 @@
 public class Domino {
     private int sideOne, sideTwo;
+    private int id = 1;
 
     public Domino(int sideOne, int sideTwo) {
         this.sideOne = sideOne;
         this.sideTwo = sideTwo;
+        id++;
     }
 
     public void flip() {
@@ -23,5 +25,9 @@ public class Domino {
 
     public int getSideTwo() {
         return sideTwo;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -1,22 +1,21 @@
 import java.util.ArrayList;
 
 public class Board {
-    private ArrayList<Domino> rowOne = new ArrayList<>();
-    private ArrayList<Domino> rowTwo = new ArrayList<>();
+    private ArrayList<Domino> row = new ArrayList<>();
 
-    String rowOneToString() {
-        return rowOne.toString();
+    String rowToString() {
+        return row.toString();
     }
 
-    String rowTwoToString() {
-        return rowTwo.toString();
+    public void addRow(Domino domino) {
+        row.add(domino);
     }
 
-    public void addRowOne(Domino domino) {
-        rowOne.add(domino);
+    public void addRowLeft(Domino domino) {
+        row.add(0, domino);
     }
 
-    public void addRowTwo(Domino domino) {
-        rowTwo.add(domino);
+    public ArrayList<Domino> getRow() {
+        return row;
     }
 }
