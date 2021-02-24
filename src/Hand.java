@@ -9,6 +9,17 @@ public class Hand {
         }
         boneyard.getBoneyard().removeAll(hand);
     }
+
+    public int sum() {
+        int totalSum = 0;
+       for (Domino dom : hand) {
+           int sideOne = dom.getSideOne();
+           int sideTwo = dom.getSideTwo();
+           int sum = sideOne+sideTwo;
+           totalSum+= sum;
+       }
+       return totalSum;
+    }
     
     public ArrayList<Domino> getHand() {
         return hand;

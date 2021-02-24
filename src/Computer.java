@@ -44,7 +44,11 @@ public class Computer {
         madeMove = false;
     }
 
-    public ArrayList<Domino> getHand() {
+    public ArrayList<Domino> accessComputerHand() {
         return hand.getHand();
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

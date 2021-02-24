@@ -4,6 +4,7 @@ public class Player {
     Hand hand = new Hand();
     Domino lastPlaced;
     int turn = 1;
+    boolean invalidMove = false;
 
     public Player(Boneyard boneyard) {
         hand.populateHand(boneyard);
@@ -36,7 +37,7 @@ public class Player {
                     board.addRowLeft(domino);
                     hand.getHand().remove(domino);
                 } else {
-                    System.out.println("Invalid move, try again, or draw from the boneyard");
+                    throw new IllegalArgumentException("Invalid move, try again or draw from the boneyard");
                 }
             } else {
                 // Checks validity of domino against last placed domino
@@ -46,7 +47,7 @@ public class Player {
                     board.addRow(domino);
                     hand.getHand().remove(domino);
                 } else {
-                    System.out.println("Invalid move, try again, or draw from the boneyard");
+                    throw new IllegalArgumentException("Invalid move, try again, or draw from the boneyard");
                 }
             }
         }
@@ -58,8 +59,11 @@ public class Player {
         hand.getHand().add(domino);
     }
 
-    public ArrayList<Domino> getPlayerHand() {
+    public ArrayList<Domino> accessPlayerHand() {
         return hand.getHand();
     }
 
+    public Hand getHand() {
+        return hand;
+    }
 }

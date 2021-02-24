@@ -3,10 +3,6 @@ import java.util.ArrayList;
 public class Board {
     private ArrayList<Domino> row = new ArrayList<>();
 
-    String rowToString() {
-        return row.toString();
-    }
-
     public void addRow(Domino domino) {
         row.add(domino);
     }
