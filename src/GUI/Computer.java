@@ -1,3 +1,5 @@
+package GUI;
+
 import java.util.ArrayList;
 
 public class Computer {
@@ -24,7 +26,7 @@ public class Computer {
                     board.addRow(dom);
                     hand.getHand().remove(dom);
                     madeMove = true;
-                    System.out.println("Computer plays " + dom.toString());
+                    System.out.println("GUI.Computer plays " + dom.toString());
                     break;
                 } else if(dom.getSideTwo() == lastPlaced.getSideTwo() ||
                 dom.getSideTwo() == 0) {
@@ -32,13 +34,13 @@ public class Computer {
                     board.addRow(dom);
                     hand.getHand().remove(dom);
                     madeMove = true;
-                    System.out.println("Computer plays " + dom.toString());
+                    System.out.println("GUI.Computer plays " + dom.toString());
                     break;
                 }
             }
             if (!madeMove) {
                 drawBoneyard(boneyard);
-                System.out.println("Computer drew from boneyard");
+                System.out.println("GUI.Computer drew from boneyard");
             }
         } while (!madeMove);
         madeMove = false;

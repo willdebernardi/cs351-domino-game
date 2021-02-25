@@ -1,3 +1,5 @@
+package CLI;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -54,7 +56,7 @@ public class Game {
                         }
                     case "d" :
                         player.drawBoneyard(boneyard);
-                        System.out.println("Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
+                        System.out.println("GUI.Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
                         if (boneyard.getBoneyard().isEmpty()) {
                             shouldBreak = true;
                         }

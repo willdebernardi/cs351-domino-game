@@ -1,4 +1,7 @@
-import java.util.*;
+package CLI;
+
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class Boneyard {
     private static LinkedList<Domino> boneyard = new LinkedList<>();

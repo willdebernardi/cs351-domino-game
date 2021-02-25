@@ -1,3 +1,5 @@
+package GUI;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -10,12 +12,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 public class GUI extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 1200, 800);
         Boneyard boneyard = new Boneyard();
