@@ -74,5 +74,6 @@ public class Player {
 
     public void setSelectedDomino(Domino selectedDomino) {
         this.selectedDomino = selectedDomino;
+
     }
 }
