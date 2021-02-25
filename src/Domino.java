@@ -1,10 +1,15 @@
+import javafx.scene.image.Image;
+
 public class Domino {
     private int sideOne, sideTwo;
     private int id = 1;
+    private Image image;
 
     public Domino(int sideOne, int sideTwo) {
         this.sideOne = sideOne;
         this.sideTwo = sideTwo;
+        String imageFilePath = "Resources/" + sideOne + "_" + sideTwo + "@0.5x.png";
+        this.image = new Image(imageFilePath, true);
         id++;
     }
 
@@ -27,7 +32,7 @@ public class Domino {
         return sideTwo;
     }
 
-    public int getId() {
-        return id;
+    public Image getImage() {
+        return image;
     }
 }

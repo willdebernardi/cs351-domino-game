@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Player {
-    Hand hand = new Hand();
-    Domino lastPlaced;
-    int turn = 1;
+    private Hand hand = new Hand();
+    private Domino selectedDomino = new Domino(0,0);
+    private int turn = 1;
 
     public Player(Boneyard boneyard) {
         hand.populateHand(boneyard);
@@ -24,7 +24,7 @@ public class Player {
             }
             hand.getHand().remove(domino);
         } else {
-            lastPlaced = board.getRow().get(board.getRow().size() - 1);
+            Domino lastPlaced = board.getRow().get(board.getRow().size() - 1);
             // If left side of row is chosen to place upon
             // check validity against the first domino in the row
             // rather than the last placed domino
@@ -64,5 +64,13 @@ public class Player {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public Domino getSelectedDomino() {
+        return selectedDomino;
+    }
+
+    public void setSelectedDomino(Domino selectedDomino) {
+        this.selectedDomino = selectedDomino;
     }
 }
