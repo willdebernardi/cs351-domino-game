@@ -49,6 +49,8 @@ public class Game {
                             break;
                         } catch (IllegalArgumentException e) {
                             System.out.println("Invalid move, try again or draw from the boneyard.");
+                            madeMove = false;
+                            break;
                         }
                     case "d" :
                         player.drawBoneyard(boneyard);

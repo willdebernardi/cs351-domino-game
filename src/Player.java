@@ -4,7 +4,6 @@ public class Player {
     Hand hand = new Hand();
     Domino lastPlaced;
     int turn = 1;
-    boolean invalidMove = false;
 
     public Player(Boneyard boneyard) {
         hand.populateHand(boneyard);
