@@ -2,7 +2,6 @@ package GUI;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GUI extends Application {
 
@@ -22,10 +20,19 @@ public class GUI extends Application {
         rowBox.getChildren().add(image);
     }
 
+    public void dominoImageView(Player player, HBox handBox, int i, Label selectedLabel) {
+        Domino domino = player.accessPlayerHand().get(i);
+        handBox.getChildren().add(domino.getImageView());
+        handBox.getChildren().get(i).setOnMouseClicked(event -> {
+            player.setSelectedDomino(domino);
+            selectedLabel.setText("You've selected " + player.getSelectedDomino().toString());
+        });
+
+    }
+
     @Override
     public void start(Stage primaryStage) {
         ArrayList<ImageView> rowImages = new ArrayList<>();
-        ArrayList<ImageView> handImages = new ArrayList<>();
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 1200, 800);
         Boneyard boneyard = new Boneyard();
@@ -33,35 +40,30 @@ public class GUI extends Application {
         Board board = new Board();
         Player player = new Player(boneyard);
 
-        Label label = new Label("The boneyard has " + boneyard.getBoneyard().size() + " dominoes");
+        Label boneyardLabel = new Label("The boneyard has " + boneyard.getBoneyard().size() + " dominoes");
         Label handLabel = new Label("You have " + player.accessPlayerHand().size() + " dominoes");
-        label.setFont(new Font(32));
+        boneyardLabel.setFont(new Font(32));
         handLabel.setFont(new Font(32));
 
         HBox labelBox = new HBox();
         labelBox.setAlignment(Pos.TOP_CENTER);
         labelBox.setSpacing(10);
-        labelBox.getChildren().addAll(label, handLabel);
+        labelBox.getChildren().addAll(boneyardLabel, handLabel);
 
         HBox handBox = new HBox();
         Label selectedLabel = new Label("You've selected " + player.getSelectedDomino().toString());
         for(int i = 0; i < player.accessPlayerHand().size(); i++) {
-            handImages.add(player.accessPlayerHand().get(i).getImageView());
-            handBox.getChildren().add(handImages.get(i));
-            int finalI = i;
-            handImages.get(i).setOnMouseClicked(event -> {
-                player.setSelectedDomino(player.accessPlayerHand().get(finalI));
-                selectedLabel.setText("You've selected " + player.getSelectedDomino().toString());
-            });
+            dominoImageView(player, handBox, i, selectedLabel);
         }
         handBox.setAlignment(Pos.CENTER);
         handBox.setSpacing(5.0);
 
         HBox rowBox = new HBox();
-        Button btn = new Button("place");
-        btn.setOnAction(event -> {
+        Button placeBtn = new Button("Place");
+        Button boneyardBtn = new Button("Draw from boneyard");
+        placeBtn.setOnAction(event -> {
             board.addRow(player.getSelectedDomino());
-//            player.accessPlayerHand().remove(player.getSelectedDomino());
+            player.accessPlayerHand().remove(player.getSelectedDomino());
             handLabel.setText("You have " + player.accessPlayerHand().size() + " dominoes");
             handBox.getChildren().removeAll(player.getSelectedDomino().getImageView());
 
@@ -70,8 +72,22 @@ public class GUI extends Application {
             }
             updateRowBox(rowBox, rowImages);
         });
+        boneyardBtn.setOnAction(event -> {
+            player.drawBoneyard(boneyard);
+            Domino newDomino = player.accessPlayerHand().get(player.accessPlayerHand().size()-1);
+            newDomino.getImageView().setOnMouseClicked(event2 -> {
+                player.setSelectedDomino(newDomino);
+                selectedLabel.setText("You've selected " + player.getSelectedDomino().toString());
+            });
+            handBox.getChildren().add(newDomino.getImageView());
+            boneyardLabel.setText("The boneyard has " + boneyard.getBoneyard().size() + " dominoes");
+            handLabel.setText("You have " + player.accessPlayerHand().size() + " dominoes");
+        });
 
-        handBox.getChildren().add(btn);
+        HBox btnBox = new HBox();
+        btnBox.getChildren().add(placeBtn);
+        btnBox.getChildren().add(boneyardBtn);
+        handBox.getChildren().add(0, btnBox);
         root.setLeft(rowBox);
         root.setRight(selectedLabel);
         root.setBottom(handBox);
