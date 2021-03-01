@@ -5,7 +5,6 @@ import javafx.scene.image.ImageView;
 
 public class Domino {
     private int sideOne, sideTwo;
-    private int id = 1;
     private Image image;
     private  ImageView imageView;
 
@@ -16,7 +15,6 @@ public class Domino {
 //        InputStream blah = getClass().getResourceAsStream(imageFilePath);
         this.image = new Image(imageFilePath, true);
         this.imageView = new ImageView(this.image);
-        id++;
     }
 
     public void flip() {
@@ -40,10 +38,6 @@ public class Domino {
 
     public int getSideTwo() {
         return sideTwo;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
     }
 
     public ImageView getImageView() {

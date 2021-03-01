@@ -1,7 +1,7 @@
-# Domino Game
+# GUI.Domino Game
 This project contains two separate files, DominoCLI.jar and DominoGUI.jar,
 the first version is a text-based command-line interface version of the game, and the
-second version is a GUI-based implementation of the same game.
+second version is a GUI.GUI-based implementation of the same game.
 
 By: Will DeBernardi, CS 351, Spring 2021
 
@@ -36,5 +36,5 @@ up when trying to place to the right afterwards. It will simply add to the end o
   to be aligned with the computer placed domino. If this happens, the domino that the user must place off of remains
   to be the last placed computer domino or left end of the row.
   
-- In the GUI version, if a player places an invalid domino, it will still be removed from the hand images at the
+- In the GUI.GUI version, if a player places an invalid domino, it will still be removed from the hand images at the
 bottom of the screen. Please don't place an invalid domino.

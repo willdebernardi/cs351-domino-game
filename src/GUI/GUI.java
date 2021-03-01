@@ -3,10 +3,7 @@ package GUI;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +26,24 @@ public class GUI extends Application {
         rowBox.getChildren().add(0, image);
     }
 
+    public void checkGameEnd(Boneyard boneyard, Player player, Computer computer,
+                             Alert gameOver, String playerWin, String computerWin) {
+        if(boneyard.getBoneyard().isEmpty() ||
+                player.accessPlayerHand().isEmpty() ||
+                computer.accessComputerHand().isEmpty()) {
+            int playerSum = player.getHand().sum();
+            int computerSum = computer.getHand().sum();
+
+            if(playerSum > computerSum) {
+                gameOver.setContentText(computerWin);
+            } else {
+                gameOver.setContentText(playerWin);
+            }
+            gameOver.showAndWait();
+            System.exit(0);
+        }
+    }
+
     public void dominoImageView(Player player, HBox handBox, int i, Label selectedLabel) {
         Domino domino = player.accessPlayerHand().get(i);
         ImageView tempImageView = domino.getImageView();
@@ -39,7 +54,6 @@ public class GUI extends Application {
             player.setSelectedDomino(domino);
             selectedLabel.setText("You've selected " + player.getSelectedDomino().toString());
         });
-
     }
 
     @Override
@@ -52,6 +66,10 @@ public class GUI extends Application {
         Board board = new Board();
         Player player = new Player(boneyard);
         Computer computer = new Computer(boneyard);
+
+        Alert gameOver = new Alert(Alert.AlertType.CONFIRMATION);
+        String computerWin = "You lost, the computer had less points than you :(";
+        String playerWin = "You won! Congratulations.";
 
         Label boneyardLabel = new Label("The boneyard has " + boneyard.getBoneyard().size() + " dominoes");
         Label handLabel = new Label("You have " + player.accessPlayerHand().size() + " dominoes");
@@ -81,16 +99,16 @@ public class GUI extends Application {
         checkBox.getChildren().addAll(leftButton, rightButton, flipButton);
 
         HBox rowBox = new HBox();
+        HBox computerRowBox = new HBox();
+        VBox rowsBox = new VBox();
         Button placeBtn = new Button("Place");
         placeBtn.setOnAction(event -> {
+            checkGameEnd(boneyard, player, computer, gameOver, playerWin, computerWin);
             RadioButton selectedRowSide = (RadioButton) rowChoice.getSelectedToggle();
             String toggleGroupValue = selectedRowSide.getText();
             handBox.getChildren().removeAll(player.getSelectedDomino().getImageView());
             player.placeDomino(board, player.getSelectedDomino(), flipButton.isSelected(), toggleGroupValue);
             handLabel.setText("You have " + player.accessPlayerHand().size() + " dominoes");
-//            for(int i = 0; i<board.getRow().size(); i++) {
-//                rowImages.add(board.getRow().get(i).getImageView());
-//            }
             rowImages.add(player.getSelectedDomino().getImageView());
             if(leftButton.isSelected()) {
                 updateRowBoxLeft(rowBox, rowImages);
@@ -98,11 +116,17 @@ public class GUI extends Application {
                 updateRowBox(rowBox, rowImages);
             }
             computer.placeDomino(board);
-            rowImages.add(computer.getLastPlayed().getImageView());
-            updateRowBox(rowBox, rowImages);
+            boneyardLabel.setText("The boneyard has " + boneyard.getBoneyard().size() + " dominoes");
+            ImageView image = computer.getLastPlayed().getImageView();
+            image.setFitWidth(100);
+            image.setPreserveRatio(true);
+            rowImages.add(image);
+            updateRowBox(computerRowBox, rowImages);
         });
+
         Button boneyardBtn = new Button("Draw from boneyard");
         boneyardBtn.setOnAction(event -> {
+            checkGameEnd(boneyard, player, computer, gameOver, playerWin, computerWin);
             player.drawBoneyard(boneyard);
             Domino newDomino = player.accessPlayerHand().get(player.accessPlayerHand().size()-1);
             newDomino.getImageView().setOnMouseClicked(event2 -> {
@@ -118,15 +142,21 @@ public class GUI extends Application {
         });
 
         HBox btnBox = new HBox();
+        computerRowBox.setTranslateX(50);
         btnBox.getChildren().add(placeBtn);
         btnBox.getChildren().add(boneyardBtn);
         handBox.getChildren().add(0, btnBox);
         handBox.getChildren().add(1, checkBox);
-        root.setLeft(rowBox);
+        rowsBox.getChildren().addAll(rowBox, computerRowBox);
+        root.setLeft(rowsBox);
         root.setRight(selectedLabel);
         root.setBottom(handBox);
         root.setTop(labelBox);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
