@@ -3,8 +3,16 @@ package CLI;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Main game loop, creates instances of neccessary objects, and then uses a while loop
+ * to handle player move, then initiates computer. After confiditons are met, checks for
+ * the winner.
+ *
+ * By: Will DeBernardi
+ */
 public class Game {
     public static void main(String[] args) {
+        // Rows for string representation of board
         ArrayList<String> rowOne = new ArrayList<>();
         ArrayList<String> rowTwo = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
@@ -13,10 +21,12 @@ public class Game {
         Board board = new Board();
         Player player = new Player(boneyard);
         Computer computer = new Computer(boneyard);
+        // Booleans to track certain player conditions
         boolean madeMove = false;
         boolean shouldBreak = false;
         boolean placedLeft = false;
         boolean firstTurn = true;
+        // Offset for the second-row stagger
         StringBuilder offset = new StringBuilder("    ");
         System.out.println("Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
 
@@ -36,6 +46,7 @@ public class Game {
                         System.out.println("Which domino would you like to place?");
                         int dominoIndex = sc.nextInt();
                         String sideChoice = "r";
+                        // Only asks for row placement after the first turn
                         if (!firstTurn) {
                             System.out.println("Left or right? (l/r)");
                             sideChoice = sc.next();
@@ -45,6 +56,8 @@ public class Game {
                         }
                         System.out.println("Flip domino? (y/n)");
                         String flipChoice = sc.next();
+                        // Attempts to place the domino, if there is an invalid move then
+                        // the loop begins again
                         try {
                             player.placeDomino(board, dominoIndex, flipChoice, sideChoice);
                             madeMove = true;
@@ -70,6 +83,7 @@ public class Game {
             }
             firstTurn = false;
 
+            // Loop for the computer turn
             while(madeMove) {
                 madeMove = false;
                 Domino lastPlaced = board.getRow().get(board.getRow().size() - 1);
@@ -90,6 +104,8 @@ public class Game {
                 System.out.println("Computer turn");
                 computer.placeDomino(board);
 
+                // Displays the properly formatted string representation of the board
+                // with the computer moves being staggered
                 System.out.println("Boneyard has " + boneyard.getBoneyard().size() + " dominoes");
                 lastPlaced = board.getRow().get(board.getRow().size() - 1);
                 rowTwo.add(lastPlaced.toString());
@@ -103,6 +119,7 @@ public class Game {
         } while(!player.accessPlayerHand().isEmpty() ||
                 !computer.accessComputerHand().isEmpty());
 
+        // Checks for points of hands and displays the winner
         int playerSum = player.getHand().sum();
         int computerSum = computer.getHand().sum();
 
