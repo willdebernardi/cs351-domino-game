@@ -6,8 +6,8 @@ import javafx.scene.image.ImageView;
 public class Domino {
     private int sideOne, sideTwo;
     private int id = 1;
-    private final Image image;
-    private final ImageView imageView;
+    private Image image;
+    private  ImageView imageView;
 
     public Domino(int sideOne, int sideTwo) {
         this.sideOne = sideOne;
@@ -23,6 +23,11 @@ public class Domino {
         int originalSideOne = sideOne;
         sideOne = sideTwo;
         sideTwo = originalSideOne;
+        String imageFilePath = "Resources/" + sideOne + "_" + sideTwo + "@0.5x.png";
+        this.image = new Image(imageFilePath, true);
+        this.imageView = new ImageView(this.image);
+        this.imageView.setFitWidth(100);
+        this.imageView.setPreserveRatio(true);
     }
 
     public String toString() {
@@ -37,8 +42,8 @@ public class Domino {
         return sideTwo;
     }
 
-    public Image getImage() {
-        return image;
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public ImageView getImageView() {

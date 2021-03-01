@@ -11,9 +11,8 @@ public class Player {
         hand.populateHand(boneyard);
     }
 
-    public void placeDomino(Board board, int dominoIndex, String flip, String sideChoice) {
-        Domino domino = hand.getHand().get(dominoIndex);
-        if (flip.equals("y")) {
+    public void placeDomino(Board board, Domino domino, boolean flip, String sideChoice) {
+        if (flip) {
             domino.flip();
         }
         // Keeps track of first turn to place domino normally
@@ -30,7 +29,7 @@ public class Player {
             // If left side of row is chosen to place upon
             // check validity against the first domino in the row
             // rather than the last placed domino
-            if(sideChoice.equals("l")) {
+            if(sideChoice.equals("Left")) {
                 Domino firstDomino = board.getRow().get(0);
                 if(domino.getSideTwo() == firstDomino.getSideOne() ||
                 domino.getSideTwo() == 0 ||

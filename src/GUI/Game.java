@@ -46,7 +46,7 @@ public class Game {
                         System.out.println("Flip domino? (y/n)");
                         String flipChoice = sc.next();
                         try {
-                            player.placeDomino(board, dominoIndex, flipChoice, sideChoice);
+//                            player.placeDomino(board, dominoIndex, flipChoice, sideChoice);
                             madeMove = true;
                             break;
                         } catch (IllegalArgumentException e) {

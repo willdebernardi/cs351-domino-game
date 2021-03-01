@@ -82,6 +82,7 @@ public class Game {
                     // Adds spaces to the offset if domino is placed to the left
                     // in order to preserve the formatting
                     offset.append("         ");
+                    placedLeft = false;
                 } else {
                     rowOne.add(lastPlaced.toString());
                 }

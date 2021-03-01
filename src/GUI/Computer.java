@@ -6,6 +6,7 @@ public class Computer {
     Hand hand = new Hand();
     Boneyard boneyard = new Boneyard();
     Boolean madeMove = false;
+    Domino lastPlayed;
 
     public Computer (Boneyard boneyard) {
         hand.populateHand(boneyard);
@@ -25,6 +26,7 @@ public class Computer {
                 dom.getSideOne() == 0) {
                     board.addRow(dom);
                     hand.getHand().remove(dom);
+                    this.lastPlayed = dom;
                     madeMove = true;
                     System.out.println("GUI.Computer plays " + dom.toString());
                     break;
@@ -33,6 +35,7 @@ public class Computer {
                     dom.flip();
                     board.addRow(dom);
                     hand.getHand().remove(dom);
+                    this.lastPlayed = dom;
                     madeMove = true;
                     System.out.println("GUI.Computer plays " + dom.toString());
                     break;
@@ -52,5 +55,9 @@ public class Computer {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public Domino getLastPlayed() {
+        return lastPlayed;
     }
 }
